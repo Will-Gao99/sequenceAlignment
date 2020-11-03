@@ -17,22 +17,22 @@ class SequenceAlign:
         self.opt = {}
 
         #initializing opt table
-        for i in range(len(based)):
+        for i in range(len(based)+1):
             self.opt[(i,0)] = i*gapPenalty
-        for j in range(len(subject)):
+        for j in range(len(subject)+1):
             self.opt[(0,j)] = j*gapPenalty
 
     def solve(self):
-        for j in range(1,len(subject)):
-            for i in range(1,len(based)):
+        for j in range(1,len(subject)+1):
+            for i in range(1,len(based)+1):
                 print((i,j))
-                self.opt[(i,j)] = min(alpha(based[i],subject[j])+self.opt[(i-1,j-1)],gapPenalty+self.opt[(i-1,j)],gapPenalty+self.opt[(i,j-1)])
-        return self.opt[(len(based)-1,len(subject)-1)]
+                self.opt[(i,j)] = min(alpha(based[i-1],subject[j-1])+self.opt[(i-1,j-1)],gapPenalty+self.opt[(i-1,j)],gapPenalty+self.opt[(i,j-1)])
+        return self.opt[(len(based),len(subject))]
 
     def debug(self):
         out = ""
-        for i in range(len(based)):
-            for j in range(len(subject)):
+        for i in range(len(based)+1):
+            for j in range(len(subject)+1):
                 out += (str((i,j))+"="+str(self.opt[(i,j)]))
             out += "\n"
         print(self.opt.keys())
@@ -50,8 +50,8 @@ if __name__ == "__main__":
     #     else:
     #         subject = line.rstrip()
 
-    based = "stop"
-    subject = "tops"
+    based = "abracadabra"
+    subject = "candelabra"
     seq = SequenceAlign(based,subject)
     print(seq.solve())
     seq.debug()
