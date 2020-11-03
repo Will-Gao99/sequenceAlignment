@@ -100,9 +100,9 @@ if __name__ == "__main__":
     based = ""
     subject= ""
     for line in inp:
-        if i == 0:
+        if idx == 0:
             inp1 = line.rstrip()
-            i += 1
+            idx += 1
         else:
             inp2 = line.rstrip()
 
